@@ -8,7 +8,6 @@ imports:
 parameters:
     locale: en
     env(SESSION_DIR): '%kernel.project_dir%/var/sessions'
-    env(MYSQL_HOST): 127.0.0.1
     database_port: null
 
     secret: 2211e14525b768f4fd27365e29ceb953619c588e
