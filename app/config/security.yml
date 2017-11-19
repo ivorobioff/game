@@ -1,0 +1,40 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        game.security.provider:
+            id: game.security.provider
+        in_memory:
+            memory: ~
+
+    encoders:
+        GameBundle\Entity\Player: sha512
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        create_player:
+            pattern: ^/api/players$
+            methods: [POST]
+            security: false
+
+        login_player:
+            pattern: ^/api/players/current/login$
+            methods: [POST]
+            security: false
+
+        main:
+            pattern: ^/api
+            stateless: true
+            simple_preauth:
+                authenticator: game.security.authenticator
+            provider: game.security.provider
+
+    access_control:
+        - { path: ^/api, roles: ROLE_PLAYER}
+

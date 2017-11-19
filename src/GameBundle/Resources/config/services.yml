@@ -1,0 +1,48 @@
+services:
+    game.security.provider:
+        class: GameBundle\Rest\Security\TokenUserProvider
+        autowire: true
+
+    game.security.authenticator:
+        class: GameBundle\Rest\Security\TokenAuthenticator
+
+    game.service.lifecycle:
+        class: GameBundle\Service\LifecycleService
+        autowire: true
+
+    game.service.player:
+        class: GameBundle\Service\PlayerService
+        autowire: true
+
+    game.service.state:
+        class: GameBundle\Service\StateService
+        autowire: true
+
+    GameBundle\Rest\PlayerParamConverter:
+        autowire: true
+        tags:
+            - { name: request.param_converter, priority: 0, converter: GameBundle\Rest\PlayerParamConverter }
+
+    GameBundle\Controller\GameController:
+        autowire: true
+
+    GameBundle\Controller\PlayerController:
+        autowire: true
+
+    GameBundle\Controller\ExceptionController:
+        parent: 'fos_rest.exception.controller'
+
+    game.command.game.play:
+        class: GameBundle\Command\GamePlayCommand
+        tags:
+            - {name: console.command}
+
+    game.command.game.install:
+        class: GameBundle\Command\GameInstallCommand
+        tags:
+            - {name: console.command}
+
+    game.command.game.reinstall:
+        class: GameBundle\Command\GameReinstallCommand
+        tags:
+            - {name: console.command}
